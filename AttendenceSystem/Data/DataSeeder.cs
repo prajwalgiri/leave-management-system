@@ -67,7 +67,7 @@ namespace AttendenceSystem.Data
                 {
                     new LeaveModel
                     {
-                        EmployeeId = Guid.NewGuid(),
+                        EmployeeId = "sample-user-id-1",
                         StartDate = DateTime.Now.AddDays(7),
                         EndDate = DateTime.Now.AddDays(10),
                         Reason = "Annual vacation",
@@ -77,7 +77,7 @@ namespace AttendenceSystem.Data
                     },
                     new LeaveModel
                     {
-                        EmployeeId = Guid.NewGuid(),
+                        EmployeeId = "sample-user-id-2",
                         StartDate = DateTime.Now.AddDays(14),
                         EndDate = DateTime.Now.AddDays(16),
                         Reason = "Medical appointment",

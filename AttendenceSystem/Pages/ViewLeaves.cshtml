@@ -1,0 +1,50 @@
+@page
+@model AttendenceSystem.Pages.ViewLeavesModel
+@{
+    ViewData["Title"] = "View Leaves";
+}
+
+<h2>View Leaves</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-auto">
+        <label asp-for="StartDate" class="form-label">From</label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+    </div>
+    <div class="col-auto">
+        <label asp-for="EndDate" class="form-label">To</label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+    </div>
+    <div class="col-auto align-self-end">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+@if (Model.Leaves.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var leave in Model.Leaves)
+        {
+            <tr>
+                <td>@leave.StartDate.ToShortDateString()</td>
+                <td>@leave.EndDate.ToShortDateString()</td>
+                <td>@leave.Reason</td>
+                <td>@leave.Status</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No leaves found for the selected date range.</p>
+}

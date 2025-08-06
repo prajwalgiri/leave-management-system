@@ -1,0 +1,32 @@
+@page
+@model AttendenceSystem.Pages.RequestLeaveModel
+@{
+    ViewData["Title"] = "Request Leave";
+}
+
+<h2>Request Leave</h2>
+
+<p><strong>Total Leaves Taken:</strong> @Model.TotalLeaves</p>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Leave.StartDate" class="form-label"></label>
+        <input asp-for="Leave.StartDate" class="form-control" type="date" />
+        <span asp-validation-for="Leave.StartDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Leave.EndDate" class="form-label"></label>
+        <input asp-for="Leave.EndDate" class="form-control" type="date" />
+        <span asp-validation-for="Leave.EndDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Leave.Reason" class="form-label"></label>
+        <textarea asp-for="Leave.Reason" class="form-control"></textarea>
+        <span asp-validation-for="Leave.Reason" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

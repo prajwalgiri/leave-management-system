@@ -4,7 +4,7 @@ namespace AttendenceSystem.Data.Models.Leave
 {
     public class LeaveModel : BaseModel
     {
-        public Guid EmployeeId { get; set; }
+        public required string EmployeeId { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; } = DateTime.Now;
         public required string Reason { get; set; }

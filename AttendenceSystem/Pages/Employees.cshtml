@@ -1,0 +1,27 @@
+@page
+@model AttendenceSystem.Pages.EmployeesModel
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<h2>Employees</h2>
+
+<a class="btn btn-success mb-3" asp-page="/AddEmployee">Add Employee</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Total Leaves (This Year)</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var emp in Model.Employees)
+    {
+        <tr>
+            <td>@emp.Name</td>
+            <td>@emp.TotalLeaves</td>
+        </tr>
+    }
+    </tbody>
+</table>

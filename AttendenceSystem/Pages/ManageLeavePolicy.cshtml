@@ -1,0 +1,30 @@
+@page
+@model AttendenceSystem.Pages.ManageLeavePolicyModel
+@{
+    ViewData["Title"] = "Manage Leave Policy";
+}
+
+<h2>Manage Leave Policy</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Input.AllowedLeaves" class="form-label">Allowed Leaves</label>
+        <input asp-for="Input.AllowedLeaves" class="form-control" type="number" min="0" />
+        <span asp-validation-for="Input.AllowedLeaves" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.FromDate" class="form-label">From Date</label>
+        <input asp-for="Input.FromDate" class="form-control" type="date" />
+        <span asp-validation-for="Input.FromDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.ToDate" class="form-label">To Date</label>
+        <input asp-for="Input.ToDate" class="form-control" type="date" />
+        <span asp-validation-for="Input.ToDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Policy</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

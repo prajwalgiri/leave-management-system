@@ -8,3 +8,55 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-auto">
+        <label asp-for="FromDate" class="form-label">From</label>
+        <input asp-for="FromDate" class="form-control" type="date" />
+    </div>
+    <div class="col-auto">
+        <label asp-for="ToDate" class="form-label">To</label>
+        <input asp-for="ToDate" class="form-control" type="date" />
+    </div>
+    <div class="col-auto align-self-end">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+@if (Model.Employees.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Total Leaves</th>
+                <th>Allowed Leaves</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var emp in Model.Employees)
+        {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.TotalLeaves</td>
+                <td>@Model.AllowedLeaves</td>
+                <td>
+                    @if (emp.Exceeded)
+                    {
+                        <span class="text-danger">Exceeded</span>
+                    }
+                    else
+                    {
+                        <span class="text-success">Within Limit</span>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No employees found.</p>
+}
