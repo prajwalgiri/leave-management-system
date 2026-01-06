@@ -1,0 +1,101 @@
+@page
+@model AttendenceSystem.Pages.Dashboards.MonthlyLeaveScheduleModel
+@{
+    ViewData["Title"] = "Monthly Leave Schedule";
+}
+
+<div class="container-fluid pb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Monthly Leave Schedule</h2>
+        <a asp-page="/Dashboards/WeeklyLeaves" class="btn btn-outline-primary btn-sm">Switch to Weekly View</a>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body bg-light">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Select Year</label>
+                    <input type="number" asp-for="SelectedYear" class="form-control" min="2020" max="2100" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Select Months</label>
+                    <select name="SelectedMonths" class="form-select" multiple style="height: 120px;">
+                        @foreach (var month in Model.MonthOptions)
+                        {
+                            <option value="@month.Value" selected="@month.Selected">@month.Text</option>
+                        }
+                    </select>
+                    <div class="form-text">Hold Ctrl/Cmd to select multiple</div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Select Employees</label>
+                    <select name="SelectedUserIds" class="form-select" multiple style="height: 120px;">
+                        @foreach (var user in Model.UserOptions)
+                        {
+                            <option value="@user.Value" selected="@user.Selected">@user.Text</option>
+                        }
+                    </select>
+                    <div class="form-text">Leave empty for all in current scope</div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100 py-2">Apply Filters</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!Model.Schedule.Any())
+    {
+        <div class="alert alert-info py-4 text-center">
+            <i class="bi bi-calendar-event h1 d-block mb-3"></i>
+            No approved leave records found for the selected criteria.
+        </div>
+    }
+    else
+    {
+        @foreach (var monthGroup in Model.Schedule)
+        {
+            <div class="mb-5">
+                <h3 class="border-bottom pb-2 mb-4 text-primary">@monthGroup.MonthName @Model.SelectedYear</h3>
+                
+                @if (!monthGroup.Days.Any())
+                {
+                    <p class="text-muted italic ms-3">No one on leave this month.</p>
+                }
+                else
+                {
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3">
+                        @foreach (var day in monthGroup.Days)
+                        {
+                            <div class="col">
+                                <div class="card h-100 @(day.Date.Date == DateTime.Today ? "border-primary shadow-sm" : "border-opacity-10")">
+                                    <div class="card-header py-1 px-2 @(day.Date.Date == DateTime.Today ? "bg-primary text-white" : "bg-light")">
+                                        <small class="fw-bold">@day.Date.ToString("ddd, dd")</small>
+                                    </div>
+                                    <div class="card-body p-2">
+                                        <ul class="list-unstyled mb-0 small">
+                                            @foreach (var name in day.EmployeeNames)
+                                            {
+                                                <li class="mb-1">
+                                                    <span class="badge bg-info text-dark w-100 text-truncate" title="@name">@name</span>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <style>
+        .card-header small { font-size: 0.75rem; }
+        .badge { font-weight: 500; font-size: 0.7rem; }
+        select[multiple] { cursor: pointer; }
+    </style>
+}
