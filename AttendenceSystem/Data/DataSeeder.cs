@@ -173,5 +173,24 @@ namespace AttendenceSystem.Data
                 await context.SaveChangesAsync();
             }
         }
+
+        public static async Task SeedCompanyInfoAsync(ApplicationDbContext context)
+        {
+            if (!await context.CompanyInfo.AnyAsync())
+            {
+                var company = new CompanyInfo
+                {
+                    Name = "Leave Management Corp",
+                    Address = "123 Business Ave, Tech City",
+                    ContactNumber = "+1 (555) 123-4567",
+                    Email = "info@leavecorp.com",
+                    LogoUrl = "/images/default-logo.png",
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                context.CompanyInfo.Add(company);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

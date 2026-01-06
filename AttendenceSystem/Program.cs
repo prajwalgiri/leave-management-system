@@ -35,6 +35,7 @@ using (var scope = app.Services.CreateScope())
         await DataSeeder.SeedRolesAsync(roleManager);
         await DataSeeder.SeedUsersAsync(userManager, context);
         await DataSeeder.SeedSampleDataAsync(context);
+        await DataSeeder.SeedCompanyInfoAsync(context);
     }
     catch (Exception ex)
     {

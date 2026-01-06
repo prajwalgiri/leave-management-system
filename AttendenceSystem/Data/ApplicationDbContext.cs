@@ -18,6 +18,7 @@ namespace AttendenceSystem.Data
         public DbSet<AttendenceHistoryModel> AttendenceHistory { get; set; }
         public DbSet<LeavePolicy> LeavePolicies { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<CompanyInfo> CompanyInfo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

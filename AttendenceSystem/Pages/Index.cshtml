@@ -1,62 +1,65 @@
 ﻿@page
 @model IndexModel
+@using AttendenceSystem.Data
+@inject ApplicationDbContext _context
 @{
     ViewData["Title"] = "Home page";
+    var company = _context.CompanyInfo.FirstOrDefault();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 text-center">
+            @if (company?.LogoUrl != null)
+            {
+                <img src="@company.LogoUrl" alt="Logo" class="mb-4" style="max-height: 120px;" />
+            }
+            <h1 class="display-3 mb-2 fw-bold">@(company?.Name ?? "Leave Management System")</h1>
+            <p class="lead mb-4 text-secondary">A comprehensive solution for managing organizational leaves, employee attendance, and departmental analytics.</p>
+            
+            @if (company != null && (!string.IsNullOrEmpty(company.Address) || !string.IsNullOrEmpty(company.ContactNumber)))
+            {
+                <div class="mb-5 text-muted small">
+                    @if (!string.IsNullOrEmpty(company.Address)) { <span><i class="bi bi-geo-alt"></i> @company.Address</span> }
+                    @if (!string.IsNullOrEmpty(company.ContactNumber)) { <span class="ms-3"><i class="bi bi-telephone"></i> @company.ContactNumber</span> }
+                </div>
+            }
+            
+            @if (!(User.Identity?.IsAuthenticated == true))
+            {
+                <div class="row text-start mt-5 g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">For Employees</h5>
+                                <p class="card-text text-muted">Submit leave requests easily, track your remaining balance, and stay updated on your application status in real-time.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">For Supervisors</h5>
+                                <p class="card-text text-muted">Efficiently manage department-wide leaves. Review, approve, or reject requests with full visibility into your team's availability.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">For Administrators</h5>
+                                <p class="card-text text-muted">Gain bird's-eye view analytics, manage departments, define leave policies, and oversee company-wide workforce patterns.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 p-5 bg-dark text-white rounded-3 shadow">
+                    <h3 class="mb-3">Ready to start?</h3>
+                    <p class="mb-4 text-light-50">Please sign in with your corporate credentials to access your personalized dashboard.</p>
+                    <a class="btn btn-primary btn-lg px-5" asp-area="Identity" asp-page="/Account/Login">Login to Dashboard</a>
+                </div>
+            }
+        </div>
+    </div>
 </div>
-
-<form method="get" class="row g-3 mb-4">
-    <div class="col-auto">
-        <label asp-for="FromDate" class="form-label">From</label>
-        <input asp-for="FromDate" class="form-control" type="date" />
-    </div>
-    <div class="col-auto">
-        <label asp-for="ToDate" class="form-label">To</label>
-        <input asp-for="ToDate" class="form-control" type="date" />
-    </div>
-    <div class="col-auto align-self-end">
-        <button type="submit" class="btn btn-primary">Filter</button>
-    </div>
-</form>
-
-@if (Model.Employees.Any())
-{
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Total Leaves</th>
-                <th>Allowed Leaves</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var emp in Model.Employees)
-        {
-            <tr>
-                <td>@emp.Name</td>
-                <td>@emp.TotalLeaves</td>
-                <td>@Model.AllowedLeaves</td>
-                <td>
-                    @if (emp.Exceeded)
-                    {
-                        <span class="text-danger">Exceeded</span>
-                    }
-                    else
-                    {
-                        <span class="text-success">Within Limit</span>
-                    }
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No employees found.</p>
-}
