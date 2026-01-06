@@ -29,6 +29,7 @@
                 <th>End Date</th>
                 <th>Reason</th>
                 <th>Status</th>
+                <th>Processed By</th>
             </tr>
         </thead>
         <tbody>
@@ -38,7 +39,25 @@
                 <td>@leave.StartDate.ToShortDateString()</td>
                 <td>@leave.EndDate.ToShortDateString()</td>
                 <td>@leave.Reason</td>
-                <td>@leave.Status</td>
+                <td>
+                    <span class="badge @(leave.Status == AttendenceSystem.Data.Models.Leave.LeaveStatus.Approved ? "bg-success" : leave.Status == AttendenceSystem.Data.Models.Leave.LeaveStatus.Rejected ? "bg-danger" : "bg-warning")">
+                        @leave.Status
+                    </span>
+                </td>
+                <td>
+                    @if (leave.ApprovedBy != null)
+                    {
+                        <span class="text-muted small">@leave.ApprovedBy.FullName</span>
+                    }
+                    else if (leave.Status != AttendenceSystem.Data.Models.Leave.LeaveStatus.Requested)
+                    {
+                        <span class="text-muted small">System/Admin</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted italic small">Pending</span>
+                    }
+                </td>
             </tr>
         }
         </tbody>

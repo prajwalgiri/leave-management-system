@@ -38,7 +38,9 @@ namespace AttendenceSystem.Pages
                 return;
             }
             var userId = user.Id;
-            var query = _context.Leaves.Where(l => l.EmployeeId == userId);
+            var query = _context.Leaves
+                .Include(l => l.ApprovedBy)
+                .Where(l => l.EmployeeId == userId);
             if (StartDate.HasValue)
             {
                 query = query.Where(l => l.StartDate >= StartDate.Value);

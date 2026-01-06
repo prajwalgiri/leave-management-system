@@ -6,20 +6,43 @@
 
 <h2>Department Dashboard: @Model.DepartmentName</h2>
 
+@if (User.IsInRole("Admin"))
+{
+    <form method="get" class="row g-3 mb-4 mt-2">
+        <div class="col-auto">
+            <select asp-for="DeptId" class="form-select" onchange="this.form.submit()">
+                <option value="">All Departments</option>
+                @foreach (var dept in Model.Departments)
+                {
+                    <option value="@dept.Id">@dept.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-secondary">Filter</button>
+        </div>
+    </form>
+}
+
 @if (!Model.DepartmentLeaves.Any())
 {
-    <div class="alert alert-info">No leave records found for this department.</div>
+    <div class="alert alert-info">No leave records found.</div>
 }
 else
 {
     <table class="table table-sm table-hover mt-3">
-        <thead>
+        <thead class="table-dark">
             <tr>
                 <th>Employee</th>
+                @if (!Model.DeptId.HasValue)
+                {
+                    <th>Department</th>
+                }
                 <th>From</th>
                 <th>To</th>
                 <th>Status</th>
                 <th>Reason</th>
+                <th>Processed By</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +50,10 @@ else
         {
             <tr>
                 <td>@leave.EmployeeName</td>
+                @if (!Model.DeptId.HasValue)
+                {
+                    <td>@leave.Department</td>
+                }
                 <td>@leave.StartDate.ToShortDateString()</td>
                 <td>@leave.EndDate.ToShortDateString()</td>
                 <td>
@@ -35,6 +62,16 @@ else
                     </span>
                 </td>
                 <td>@leave.Reason</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(leave.ProcessedBy))
+                    {
+                        <span class="text-muted small">@leave.ProcessedBy</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted italic small">Pending</span>
+                    }
+                </td>
             </tr>
         }
         </tbody>

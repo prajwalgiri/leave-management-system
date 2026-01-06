@@ -7,29 +7,55 @@
 <h2>Admin Overview</h2>
 
 <div class="row mt-4">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Total Employees</h5>
-                <p class="card-text h2">@Model.TotalEmployees</p>
+    <div class="col-md-4 col-lg-2 mb-3">
+        <a asp-page="/Employees" class="text-decoration-none">
+            <div class="card text-white bg-primary h-100">
+                <div class="card-body">
+                    <h6 class="card-title">Employees</h6>
+                    <p class="card-text h3">@Model.TotalEmployees</p>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-success mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Departments</h5>
-                <p class="card-text h2">@Model.TotalDepartments</p>
+    <div class="col-md-4 col-lg-2 mb-3">
+        <a asp-page="/ManageDepartments" class="text-decoration-none">
+            <div class="card text-white bg-success h-100">
+                <div class="card-body">
+                    <h6 class="card-title">Departments</h6>
+                    <p class="card-text h3">@Model.TotalDepartments</p>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-warning mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Pending Requests</h5>
-                <p class="card-text h2">@Model.PendingLeaves</p>
+    <div class="col-md-4 col-lg-2 mb-3">
+        <a asp-page="/ApproveLeave" class="text-decoration-none">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body">
+                    <h6 class="card-title">Pending</h6>
+                    <p class="card-text h3">@Model.PendingLeaves</p>
+                </div>
             </div>
-        </div>
+        </a>
+    </div>
+    <div class="col-md-4 col-lg-3 mb-3">
+        <a asp-page="/Dashboards/TodaysLeaves" class="text-decoration-none">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body">
+                    <h6 class="card-title">Leaves Today</h6>
+                    <p class="card-text h3">@Model.TotalLeavesToday</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4 col-lg-3 mb-3">
+        <a asp-page="/Dashboards/DepartmentDashboard" class="text-decoration-none">
+            <div class="card text-white bg-dark h-100">
+                <div class="card-body">
+                    <h6 class="card-title">Total Leaves</h6>
+                    <p class="card-text h3">@Model.TotalLeaves</p>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 

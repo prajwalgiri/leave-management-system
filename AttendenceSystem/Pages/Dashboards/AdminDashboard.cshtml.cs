@@ -19,6 +19,8 @@ namespace AttendenceSystem.Pages.Dashboards
         public int TotalEmployees { get; set; }
         public int TotalDepartments { get; set; }
         public int PendingLeaves { get; set; }
+        public int TotalLeavesToday { get; set; }
+        public int TotalLeaves { get; set; }
         public List<DepartmentSummary> DepartmentSummaries { get; set; } = new();
 
         public class DepartmentSummary
@@ -30,9 +32,14 @@ namespace AttendenceSystem.Pages.Dashboards
 
         public async Task OnGetAsync()
         {
+            var today = DateTime.Today;
             TotalEmployees = await _context.Users.CountAsync();
             TotalDepartments = await _context.Departments.CountAsync();
             PendingLeaves = await _context.Leaves.CountAsync(l => l.Status == AttendenceSystem.Data.Models.Leave.LeaveStatus.Requested);
+            TotalLeavesToday = await _context.Leaves
+                .CountAsync(l => l.Status == AttendenceSystem.Data.Models.Leave.LeaveStatus.Approved
+                            && l.StartDate <= today && l.EndDate >= today);
+            TotalLeaves = await _context.Leaves.CountAsync();
 
             DepartmentSummaries = await _context.Departments
                 .Select(d => new DepartmentSummary
