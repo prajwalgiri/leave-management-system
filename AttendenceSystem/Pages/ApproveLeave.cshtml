@@ -1,0 +1,47 @@
+@page
+@model AttendenceSystem.Pages.ApproveLeaveModel
+@{
+    ViewData["Title"] = "Approve Leaves";
+}
+
+<h2>Approve Leave Requests</h2>
+
+@if (!Model.PendingLeaves.Any())
+{
+    <div class="alert alert-info">No pending leave requests found.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Employee</th>
+                <th>Department</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Reason</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var leave in Model.PendingLeaves)
+        {
+            <tr>
+                <td>@leave.EmployeeName</td>
+                <td><span class="badge bg-secondary">@leave.Department</span></td>
+                <td>@leave.StartDate.ToShortDateString()</td>
+                <td>@leave.EndDate.ToShortDateString()</td>
+                <td>@leave.Reason</td>
+                <td>
+                    <form method="post" class="d-inline">
+                        <button type="submit" asp-page-handler="Approve" asp-route-id="@leave.Id" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+                    <form method="post" class="d-inline">
+                        <button type="submit" asp-page-handler="Reject" asp-route-id="@leave.Id" class="btn btn-sm btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

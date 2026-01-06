@@ -1,0 +1,31 @@
+@page
+@model AttendenceSystem.Pages.Dashboards.TodaysLeavesModel
+@{
+    ViewData["Title"] = "Who is out today?";
+}
+
+<h2>Staff on Leave Today (@DateTime.Today.ToLongDateString())</h2>
+
+@if (!Model.EmployeesOnLeave.Any())
+{
+    <div class="alert alert-success mt-4">Everyone is in today! 🏢</div>
+}
+else
+{
+    <div class="row mt-4">
+        @foreach (var emp in Model.EmployeesOnLeave)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card border-warning shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@emp.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@emp.Department</h6>
+                        <p class="card-text">
+                            Returning on: <strong>@emp.EndDate.AddDays(1).ToShortDateString()</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

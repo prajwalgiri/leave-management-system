@@ -1,0 +1,42 @@
+@page
+@model AttendenceSystem.Pages.Dashboards.DepartmentDashboardModel
+@{
+    ViewData["Title"] = "Department Dashboard";
+}
+
+<h2>Department Dashboard: @Model.DepartmentName</h2>
+
+@if (!Model.DepartmentLeaves.Any())
+{
+    <div class="alert alert-info">No leave records found for this department.</div>
+}
+else
+{
+    <table class="table table-sm table-hover mt-3">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Status</th>
+                <th>Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var leave in Model.DepartmentLeaves)
+        {
+            <tr>
+                <td>@leave.EmployeeName</td>
+                <td>@leave.StartDate.ToShortDateString()</td>
+                <td>@leave.EndDate.ToShortDateString()</td>
+                <td>
+                    <span class="badge @(leave.Status == AttendenceSystem.Data.Models.Leave.LeaveStatus.Approved ? "bg-success" : leave.Status == AttendenceSystem.Data.Models.Leave.LeaveStatus.Rejected ? "bg-danger" : "bg-warning")">
+                        @leave.Status
+                    </span>
+                </td>
+                <td>@leave.Reason</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,55 @@
+@page
+@model AttendenceSystem.Pages.ManageDepartmentsModel
+@{
+    ViewData["Title"] = "Manage Departments";
+}
+
+<h2>Manage Departments</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Create New Department</h4>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Input.Name" class="form-label">Department Name</label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.DepartmentHeadId" class="form-label">Department Head</label>
+                <select asp-for="Input.DepartmentHeadId" class="form-select" asp-items="@(new SelectList(Model.Supervisors, "Id", "FullName"))">
+                    <option value="">-- No Head Assigned --</option>
+                </select>
+                <span asp-validation-for="Input.DepartmentHeadId" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+    
+    <div class="col-md-8">
+        <h4>Existing Departments</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Head</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var dept in Model.Departments)
+            {
+                <tr>
+                    <td>@dept.Name</td>
+                    <td>@(dept.DepartmentHead?.FullName ?? "N/A")</td>
+                    <td>@dept.CreatedAt.ToShortDateString()</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

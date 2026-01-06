@@ -11,6 +11,6 @@ namespace AttendenceSystem.Data.Models.Leave
         public LeaveStatus Status { get; set; } = LeaveStatus.Requested;
         public DateTime? ApprovedAt { get; set; }
         public string? ApprovedById { get; set; }
-        public IdentityUser? ApprovedBy { get; set; }
+        public ApplicationUser? ApprovedBy { get; set; }
     }
 }

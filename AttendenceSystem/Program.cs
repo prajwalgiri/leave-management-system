@@ -1,4 +1,5 @@
 using AttendenceSystem.Data;
+using AttendenceSystem.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 
@@ -23,13 +25,15 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-        
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
         // Ensure database is created
         context.Database.EnsureCreated();
-        
+
         // Seed users and sample data
-        await DataSeeder.SeedUsersAsync(userManager);
+        await DataSeeder.SeedRolesAsync(roleManager);
+        await DataSeeder.SeedUsersAsync(userManager, context);
         await DataSeeder.SeedSampleDataAsync(context);
     }
     catch (Exception ex)

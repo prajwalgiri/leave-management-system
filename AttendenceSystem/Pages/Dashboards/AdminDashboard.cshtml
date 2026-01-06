@@ -1,0 +1,60 @@
+@page
+@model AttendenceSystem.Pages.Dashboards.AdminDashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>Admin Overview</h2>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Employees</h5>
+                <p class="card-text h2">@Model.TotalEmployees</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Departments</h5>
+                <p class="card-text h2">@Model.TotalDepartments</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Pending Requests</h5>
+                <p class="card-text h2">@Model.PendingLeaves</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mt-4">Department Statistics</h4>
+<table class="table table-bordered mt-2">
+    <thead class="table-light">
+        <tr>
+            <th>Department Name</th>
+            <th>Employee Count</th>
+            <th>Total Leave Requests</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var dept in Model.DepartmentSummaries)
+    {
+        <tr>
+            <td>@dept.Name</td>
+            <td>@dept.EmployeeCount</td>
+            <td>@dept.LeaveCount</td>
+            <td>
+                @* Potential link to filtered view if needed *@
+                <span class="text-muted">No actions</span>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

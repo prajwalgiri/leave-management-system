@@ -1,9 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using AttendenceSystem.Data;
+using AttendenceSystem.Data.Models;
 using AttendenceSystem.Data.Models.Leave;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace AttendenceSystem.Pages
@@ -11,9 +12,9 @@ namespace AttendenceSystem.Pages
     public class RequestLeaveModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RequestLeaveModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RequestLeaveModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;

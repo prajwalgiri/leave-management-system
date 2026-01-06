@@ -8,6 +8,11 @@
 
 <form method="post">
     <div class="mb-3">
+        <label asp-for="Input.FullName" class="form-label">Full Name</label>
+        <input asp-for="Input.FullName" class="form-control" />
+        <span asp-validation-for="Input.FullName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
         <label asp-for="Input.UserName" class="form-label">Username</label>
         <input asp-for="Input.UserName" class="form-control" />
         <span asp-validation-for="Input.UserName" class="text-danger"></span>
@@ -16,6 +21,27 @@
         <label asp-for="Input.Email" class="form-label">Email</label>
         <input asp-for="Input.Email" class="form-control" />
         <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.PhoneNumber" class="form-label">Phone Number (Optional)</label>
+        <input asp-for="Input.PhoneNumber" class="form-control" />
+        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.DepartmentId" class="form-label">Department</label>
+        <select asp-for="Input.DepartmentId" class="form-select" asp-items="@(new SelectList(Model.Departments, "Id", "Name"))">
+            <option value="">-- Select Department --</option>
+        </select>
+        <span asp-validation-for="Input.DepartmentId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Role" class="form-label">Role</label>
+        <select asp-for="Input.Role" class="form-select">
+            <option value="User">User</option>
+            <option value="Supervisor">Supervisor</option>
+            <option value="Admin">Admin</option>
+        </select>
+        <span asp-validation-for="Input.Role" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Input.Password" class="form-label">Password</label>

@@ -1,0 +1,48 @@
+@page
+@model AttendenceSystem.Pages.Dashboards.WeeklyLeavesModel
+@{
+    ViewData["Title"] = "Weekly Employee Leaves";
+}
+
+<h2>Weekly Leave Schedule</h2>
+
+<form method="get" class="row g-3 align-items-center mb-4">
+    <div class="col-auto">
+        <label for="SelectedDate" class="col-form-label">Pick a date to see that week:</label>
+    </div>
+    <div class="col-auto">
+        <input type="date" asp-for="SelectedDate" class="form-control" onchange="this.form.submit()" />
+    </div>
+</form>
+
+<div class="alert alert-secondary">
+    Showing week from <strong>@Model.WeekStart.ToLongDateString()</strong> to <strong>@Model.WeekEnd.ToLongDateString()</strong>
+</div>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    @foreach (var day in Model.WeeklyData)
+    {
+        <div class="col">
+            <div class="card h-100 @(day.Date.Date == DateTime.Today ? "border-primary shadow-sm" : "")">
+                <div class="card-header @(day.Date.Date == DateTime.Today ? "bg-primary text-white" : "bg-light")">
+                    <h5 class="card-title mb-0">@day.Date.ToString("ddd, MMM dd")</h5>
+                </div>
+                <div class="card-body">
+                    @if (day.EmployeeNames.Any())
+                    {
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var name in day.EmployeeNames)
+                            {
+                                <li class="mb-1"><span class="badge bg-info text-dark">@name</span></li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span class="text-muted italic">No one on leave</span>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
