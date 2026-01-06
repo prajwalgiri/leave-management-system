@@ -15,12 +15,8 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="mb-3">
                     <label asp-for="Input.UserNameOrEmail" class="form-label">Username or Email</label>
-                    <div class="input-group">
-                        <input asp-for="Input.UserNameOrEmail" class="form-control" autocomplete="username" aria-required="true" placeholder="username" />
-                        <span class="input-group-text text-muted bg-light">@@company.com</span>
-                    </div>
+                    <input asp-for="Input.UserNameOrEmail" class="form-control" autocomplete="username" aria-required="true" placeholder="username or email" />
                     <span asp-validation-for="Input.UserNameOrEmail" class="text-danger small"></span>
-                    <div class="form-text mt-1 small">You can just enter your username; the domain is added automatically.</div>
                 </div>
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />

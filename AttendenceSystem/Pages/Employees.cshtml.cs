@@ -23,6 +23,7 @@ namespace AttendenceSystem.Pages
         public class EmployeeViewModel
         {
             public string Id { get; set; } = string.Empty;
+            public string UserName { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
             public string Email { get; set; } = string.Empty;
             public string? Phone { get; set; }
@@ -44,6 +45,7 @@ namespace AttendenceSystem.Pages
             EmployeeList = users.Select(u => new EmployeeViewModel
             {
                 Id = u.Id,
+                UserName = u.UserName ?? string.Empty,
                 Name = u.FullName ?? u.UserName ?? "(No Name)",
                 Email = u.Email ?? string.Empty,
                 Phone = u.PhoneNumber,

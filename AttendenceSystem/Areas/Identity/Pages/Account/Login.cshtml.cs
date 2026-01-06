@@ -99,10 +99,6 @@ namespace AttendenceSystem.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var userName = Input.UserNameOrEmail;
-                if (!userName.Contains("@"))
-                {
-                    userName += "@company.com";
-                }
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true

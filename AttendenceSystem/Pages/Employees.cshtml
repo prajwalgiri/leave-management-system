@@ -11,6 +11,7 @@
 <table class="table table-bordered">
     <thead>
         <tr>
+            <th>Username</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -22,6 +23,7 @@
     @foreach (var emp in Model.EmployeeList)
     {
         <tr>
+            <td>@emp.UserName</td>
             <td>@emp.Name</td>
             <td>@emp.Email</td>
             <td>@emp.Phone</td>
