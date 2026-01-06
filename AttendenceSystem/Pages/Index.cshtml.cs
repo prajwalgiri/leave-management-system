@@ -23,6 +23,10 @@ namespace AttendenceSystem.Pages
         {
             if (User.Identity?.IsAuthenticated == true)
             {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToPage("/Dashboards/AdminDashboard");
+                }
                 return RedirectToPage("/Dashboards/DepartmentDashboard");
             }
             return Page();
